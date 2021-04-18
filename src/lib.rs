@@ -1,29 +1,29 @@
 use std::marker::PhantomData;
 
-pub struct DzCovariant<T> {
+pub struct Covariant<T> {
     _covariant: PhantomData<fn() -> T>,
 }
 
-impl<T> DzCovariant<T> {
+impl<T> Covariant<T> {
     /// Create new covariant type.
     ///
     /// ```
-    /// # use variance::DzCovariant;
-    /// fn is_covariant<'a>(obj: &'a DzCovariant<&'a str>) -> &'a DzCovariant<&'a str> { obj }
+    /// # use variance::Covariant;
+    /// fn is_covariant<'a>(obj: &'a Covariant<&'a str>) -> &'a Covariant<&'a str> { obj }
     /// # fn main() {
-    /// // Works because 'static is covariant with 'a, and DzCovariant is covariant over T.
-    /// let covariant = DzCovariant::<&'static str>::new();
+    /// // Works because 'static is covariant with 'a, and Covariant is covariant over T.
+    /// let covariant = Covariant::<&'static str>::new();
     /// let covariant = is_covariant(&covariant);
     /// let _test = &covariant;
     /// # }
     /// ```
     ///
     /// ```compile_fail
-    /// # use variance::DzCovariant;
-    /// fn is_contravariant(obj: DzCovariant<&'static str>) -> DzCovariant<&'static str> { obj }
+    /// # use variance::Covariant;
+    /// fn is_contravariant(obj: Covariant<&'static str>) -> Covariant<&'static str> { obj }
     /// # fn test<'a>() {
-    /// // Fails because 'a is contravariant with 'static, and DzCovariant is covariant over T.
-    /// let covariant = DzCovariant::<&'a str>::new();
+    /// // Fails because 'a is contravariant with 'static, and Covariant is covariant over T.
+    /// let covariant = Covariant::<&'a str>::new();
     /// let covariant = is_contravariant(covariant);
     /// let _test = &covariant;
     /// # }
@@ -31,36 +31,36 @@ impl<T> DzCovariant<T> {
     /// ```
     ///
     pub fn new() -> Self {
-        DzCovariant::<T> {
+        Covariant::<T> {
             _covariant: PhantomData::<fn() -> T>::default(),
         }
     }
 }
 
-pub struct DzContravariant<T> {
+pub struct Contravariant<T> {
     _contravariant: PhantomData<fn(T)>,
 }
 
-impl<T> DzContravariant<T> {
+impl<T> Contravariant<T> {
     /// Create new contravariant type.
     ///
     /// ```compile_fail
-    /// # use variance::DzContravariant;
-    /// fn is_covariant<'a>(obj: &'a DzContravariant<&'a str>) -> &'a DzContravariant<&'a str> { obj }
+    /// # use variance::Contravariant;
+    /// fn is_covariant<'a>(obj: &'a Contravariant<&'a str>) -> &'a Contravariant<&'a str> { obj }
     /// # fn main() {
-    /// // Fails because 'static is covariant with 'a, and DzContravariant is contravariant over T.
-    /// let contravariant = DzContravariant::<&'static str>::new();
+    /// // Fails because 'static is covariant with 'a, and Contravariant is contravariant over T.
+    /// let contravariant = Contravariant::<&'static str>::new();
     /// let contravariant = is_covariant(&contravariant);
     /// let _test = &contravariant;
     /// # }
     /// ```
     ///
     /// ```
-    /// # use variance::DzContravariant;
-    /// fn is_contravariant(obj: DzContravariant<&'static str>) -> DzContravariant<&'static str> { obj }
+    /// # use variance::Contravariant;
+    /// fn is_contravariant(obj: Contravariant<&'static str>) -> Contravariant<&'static str> { obj }
     /// # fn test<'a>() {
-    /// // Works because 'a is contravariant with 'static, and DzContravariant is contravariant over T.
-    /// let contravariant = DzContravariant::<&'a str>::new();
+    /// // Works because 'a is contravariant with 'static, and Contravariant is contravariant over T.
+    /// let contravariant = Contravariant::<&'a str>::new();
     /// let contravariant = is_contravariant(contravariant);
     /// let _test = &contravariant;
     /// # }
@@ -68,36 +68,36 @@ impl<T> DzContravariant<T> {
     /// ```
     ///
     pub fn new() -> Self {
-        DzContravariant::<T> {
+        Contravariant::<T> {
             _contravariant: PhantomData::<fn(T)>::default(),
         }
     }
 }
 
-pub struct DzInvariant<T> {
+pub struct Invariant<T> {
     _invariant: PhantomData<fn(T) -> T>,
 }
 
-impl<T> DzInvariant<T> {
+impl<T> Invariant<T> {
     /// Create new invariant type.
     ///
     /// ```compile_fail
-    /// # use variance::DzInvariant;
-    /// fn is_covariant<'a>(obj: &'a DzInvariant<&'a str>) -> &'a DzInvariant<&'a str> { obj }
+    /// # use variance::Invariant;
+    /// fn is_covariant<'a>(obj: &'a Invariant<&'a str>) -> &'a Invariant<&'a str> { obj }
     /// # fn main() {
-    /// // Fails because 'static is covariant with 'a, and DzInvariant is invariant over T.
-    /// let invariant = DzInvariant::<&'static str>::new();
+    /// // Fails because 'static is covariant with 'a, and Invariant is invariant over T.
+    /// let invariant = Invariant::<&'static str>::new();
     /// let invariant = is_covariant(&invariant);
     /// let _test = &invariant;
     /// # }
     /// ```
     ///
     /// ```compile_fail
-    /// # use variance::DzInvariant;
-    /// fn is_contravariant(obj: DzInvariant<&'static str>) -> DzInvariant<&'static str> { obj }
+    /// # use variance::Invariant;
+    /// fn is_contravariant(obj: Invariant<&'static str>) -> Invariant<&'static str> { obj }
     /// # fn test<'a>() {
-    /// // Fails because 'a is contravariant with 'static, and DzInvariant is invariant over T.
-    /// let invariant = DzInvariant::<&'a str>::new();
+    /// // Fails because 'a is contravariant with 'static, and Invariant is invariant over T.
+    /// let invariant = Invariant::<&'a str>::new();
     /// let invariant = is_contravariant(invariant);
     /// let _test = &invariant;
     /// # }
@@ -105,7 +105,7 @@ impl<T> DzInvariant<T> {
     /// ```
     ///
     pub fn new() -> Self {
-        DzInvariant::<T> {
+        Invariant::<T> {
             _invariant: PhantomData::<fn(T) -> T>::default(),
         }
     }
