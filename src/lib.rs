@@ -20,7 +20,7 @@ impl<T> DzCovariant<T> {
     ///
     /// ```compile_fail
     /// # use variance::DzCovariant;
-    /// fn is_contravariant<'a>(obj: DzCovariant<&'static str>) -> DzCovariant<&'static str> { obj }
+    /// fn is_contravariant(obj: DzCovariant<&'static str>) -> DzCovariant<&'static str> { obj }
     /// # fn test<'a>() {
     /// // Fails because 'a is contravariant with 'static, and DzCovariant is covariant over T.
     /// let covariant = DzCovariant::<&'a str>::new();
@@ -57,7 +57,7 @@ impl<T> DzContravariant<T> {
     ///
     /// ```
     /// # use variance::DzContravariant;
-    /// fn is_contravariant<'a>(obj: DzContravariant<&'static str>) -> DzContravariant<&'static str> { obj }
+    /// fn is_contravariant(obj: DzContravariant<&'static str>) -> DzContravariant<&'static str> { obj }
     /// # fn test<'a>() {
     /// // Works because 'a is contravariant with 'static, and DzContravariant is contravariant over T.
     /// let contravariant = DzContravariant::<&'a str>::new();
@@ -94,7 +94,7 @@ impl<T> DzInvariant<T> {
     ///
     /// ```compile_fail
     /// # use variance::DzInvariant;
-    /// fn is_contravariant<'a>(obj: DzInvariant<&'static str>) -> DzInvariant<&'static str> { obj }
+    /// fn is_contravariant(obj: DzInvariant<&'static str>) -> DzInvariant<&'static str> { obj }
     /// # fn test<'a>() {
     /// // Fails because 'a is contravariant with 'static, and DzInvariant is invariant over T.
     /// let invariant = DzInvariant::<&'a str>::new();
